@@ -46,7 +46,7 @@ export default {
   watch: {
     fullImage: function() {
       if (this.loadedURLs.indexOf(this.fullImage) === -1) {
-          console.log('hii')
+        console.log("hii");
         this.setLoader();
       }
     }
@@ -61,6 +61,10 @@ export default {
 
       img.src = this.fullImage;
       this.loaderTimer();
+      if (this.loaderTimer) {
+        clearInterval(this.loaderInterval);
+        this.loaderInterval = null;
+      }
       this.loaderInterval = setInterval(this.loaderTimer.bind(this), 380);
     },
     setIsLoaded() {
@@ -70,8 +74,8 @@ export default {
         this.loadedURLs.push(this.fullImage);
       }
 
-      clearInterval(this.loaderInterval);
-      this.loaderInterval = null;
+      //   clearInterval(this.loaderInterval);
+      //   this.loaderInterval = null;
     },
     loaderTimer() {
       requestAnimationFrame(() => {
@@ -107,6 +111,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  min-height: 192px;
+  margin: 0;
 }
 
 .movie-frame--placeholder {

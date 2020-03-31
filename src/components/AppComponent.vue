@@ -34,16 +34,49 @@
     />
     <scene-scrubber
       :setSeconds="setSeconds"
+      :longestFilmLength="longestFilmLength"
+      :displayMode="displayMode"
+      :displayWidth="displayWidth"
+      :duration="movieFrames.the_virgin_suicides.seconds"
+      :id="movieFrames.the_virgin_suicides.id"
+      :label="movieFrames.the_virgin_suicides.label"
+    />
+    <scene-scrubber
+      :setSeconds="setSeconds"
       :initialTime="movieFrameSeconds"
+      :longestFilmLength="longestFilmLength"
+      :displayMode="displayMode"
+      :displayWidth="displayWidth"
       :duration="movieFrames.lost_in_translation.seconds"
       :id="movieFrames.lost_in_translation.id"
       :label="movieFrames.lost_in_translation.label"
     />
-     <scene-scrubber
+    <scene-scrubber
       :setSeconds="setSeconds"
+      :longestFilmLength="longestFilmLength"
+      :displayMode="displayMode"
+      :displayWidth="displayWidth"
       :duration="movieFrames.marie_antoinette.seconds"
       :id="movieFrames.marie_antoinette.id"
       :label="movieFrames.marie_antoinette.label"
+    />
+    <scene-scrubber
+      :setSeconds="setSeconds"
+      :longestFilmLength="longestFilmLength"
+      :displayMode="displayMode"
+      :displayWidth="displayWidth"
+      :duration="movieFrames.somewhere.seconds"
+      :id="movieFrames.somewhere.id"
+      :label="movieFrames.somewhere.label"
+    />
+    <scene-scrubber
+      :setSeconds="setSeconds"
+      :longestFilmLength="longestFilmLength"
+      :displayMode="displayMode"
+      :displayWidth="displayWidth"
+      :duration="movieFrames.the_bling_ring.seconds"
+      :id="movieFrames.the_bling_ring.id"
+      :label="movieFrames.the_bling_ring.label"
     />
   </main>
 </template>
@@ -52,11 +85,33 @@ import lost_in_translation__single from "../data/img/lost_in_translation__single
 import lost_in_translation__full from "../data/img/lost_in_translation__full.jpg";
 import marie_antoinette__single from "../data/img/marie_antoinette__single_frame.jpg";
 import marie_antoinette__full from "../data/img/marie_antoinette__full.jpg";
+import the_virgin_suicides__single from "../data/img/the_virgin_suicides__single_frame.jpg";
+import the_virgin_suicides__full from "../data/img/the_virgin_suicides__full.jpg";
+import somewhere__single from "../data/img/somewhere__single_frame.jpg";
+import somewhere__full from "../data/img/somewhere__full.jpg";
+
+import the_bling_ring__single from "../data/img/the_bling_ring__single_frame.jpg";
+import the_bling_ring__full from "../data/img/the_bling_ring__full.jpg";
 
 import MovieFrame from "./MovieFrame.vue";
 import SceneScrubber from "./SceneScrubber.vue";
 
+const DISPLAY_SIZES = {
+  mobile: "mobile",
+  tablet: "tablet",
+  desktop: "desktop"
+};
+
 const movieFrames = {
+  the_virgin_suicides: {
+    label: "The Virgin Suicides",
+    id: "the_virgin_suicides",
+    full: the_virgin_suicides__full,
+    placeholder: the_virgin_suicides__single,
+    height: 192,
+    width: 320,
+    seconds: 5820
+  },
   lost_in_translation: {
     label: "Lost In Translation",
     id: "lost_in_translation",
@@ -73,7 +128,25 @@ const movieFrames = {
     placeholder: marie_antoinette__single,
     height: 180,
     width: 320,
-    seconds: 122*60 + 35
+    seconds: 7355
+  },
+  somewhere: {
+    label: "Somewhere",
+    id: "somewhere",
+    full: somewhere__full,
+    placeholder: somewhere__single,
+    height: 176,
+    width: 320,
+    seconds: 5907
+  },
+  the_bling_ring: {
+    label: "The Bling Ringt",
+    id: "the_bling_ring",
+    full: the_bling_ring__full,
+    placeholder: the_bling_ring__single,
+    height: 172,
+    width: 320,
+    seconds: 5433
   }
 };
 
@@ -87,14 +160,34 @@ export default {
     return {
       movieFrames,
       movieFrameSeconds: 90,
-      activeMovie: movieFrames.lost_in_translation.id
+      displayMode: DISPLAY_SIZES.desktop,
+      displayWidth: window.innerWidth,
+      activeMovie: movieFrames.lost_in_translation.id,
+      longestFilmLength: movieFrames.marie_antoinette.seconds
     };
   },
   methods: {
     setSeconds(activeMovie, seconds) {
-       this.activeMovie = activeMovie;
+      this.activeMovie = activeMovie;
       this.movieFrameSeconds = seconds;
+    },
+    setWidth() {
+      this.displayWidth = window.innerWidth;
+      if (this.displayWidth < 420) {
+        this.displayMode = DISPLAY_SIZES.mobile;
+      } else if (this.displayWidth < 768) {
+        this.displayMode = DISPLAY_SIZES.tablet;
+      } else {
+        this.displayMode = DISPLAY_SIZES.desktop;
+      }
     }
+  },
+  mounted() {
+    this.setWidth();
+    window.addEventListener("resize", this.setWidth.bind(this));
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.setWidth.bind(this));
   }
 };
 </script>
@@ -105,5 +198,26 @@ html {
   padding: 0;
 
   font-family: "franklin-gothic-urw", sans-serif;
+}
+
+main {
+  padding: 16px;
+}
+
+#movie-frame--container {
+  height: 192px;
+  width: 320px;
+}
+
+@media only screen and (min-width: 420px) {
+  main {
+    padding: 24px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  main {
+    padding: 42px;
+  }
 }
 </style>

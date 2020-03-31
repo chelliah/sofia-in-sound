@@ -1,6 +1,5 @@
 <template>
   <section class="scene-scrubber">
-    <h3 class="title">{{label}}</h3>
     <div
       class="scrubber"
       v-on:mousedown="pressThumb"
@@ -29,17 +28,31 @@
         </svg>
       </div>
     </div>
+
+    <h3 class="title">{{label}}</h3>
   </section>
 </template>
 
 <script>
-const MARGIN = 10;
-const TITLE_WIDTH = 300;
+const WINDOW_PADDING = {
+    desktop: 42,
+    tablet: 24,
+    mobile: 16
+};
+const MARGIN_LABEL_TO_BAR = 10;
+const TITLE_WIDTH = 240;
+
 export default {
   name: "SceneScrubber",
   props: {
-    width: {
+    displayWidth: {
       default: 700
+    },
+    displayMode: {
+      default: "desktop"
+    },
+    longestFilmLength: {
+      default: 7355
     },
     duration: {
       default: 60 * 100 + 31
@@ -63,10 +76,33 @@ export default {
       progress: 0,
       isThumbing: false,
       formattedTime: null,
-      scrubberWidth: this.width - TITLE_WIDTH - MARGIN,
       scrubberLeft: 0,
       time: 0
     };
+  },
+  computed: {
+    scrubberWidth: function() {
+    let padding = WINDOW_PADDING[this.displayMode]
+      let pctWidth =
+        this.displayWidth * (this.duration / this.longestFilmLength);
+      console.log(this.displayWidth);
+
+      switch (this.displayMode) {
+        case "mobile":
+          return Math.max(this.displayWidth - padding * 2, 200);
+          break;
+        case "tablet":
+          return pctWidth - padding * 2;
+          break;
+        case "desktop":
+        default:
+          return (
+            pctWidth - TITLE_WIDTH - MARGIN_LABEL_TO_BAR - padding * 2
+          );
+          break;
+      }
+      return pctWidth - TITLE_WIDTH - MARGIN_LABEL_TO_BAR - padding * 2;
+    }
   },
   methods: {
     setThumbPos(e) {
@@ -93,7 +129,7 @@ export default {
         window.addEventListener("mouseup", this.releaseThumb);
       } else if (e.target.classList[0] == "thumb") {
         let { left, width } = e.target.offsetParent.getBoundingClientRect();
-        this.progress = (e.clientX - left)/this.scrubberWidth;
+        this.progress = (e.clientX - left) / this.scrubberWidth;
         this.scrubberLeft = left;
         this.scrubberWidth = width;
         this.formatTime();
@@ -149,14 +185,13 @@ export default {
 @import "../styles/global-styles.scss";
 
 .scene-scrubber {
-  display: flex;
-  align-items: center;
-  padding: 20px;
+  display: block;
+  //   padding: 20px;
 }
 
 .title {
-  width: 300px;
-  flex-basis: 300px;
+  width: 240px;
+  flex-basis: 240px;
   flex-shrink: 0;
   /* The Virgin Suicides */
 
@@ -169,13 +204,15 @@ export default {
   height: 24px;
   text-align: center;
   text-transform: uppercase;
+
+  margin: 8px 0 32px 0;
 }
 
 .scrubber {
   cursor: pointer;
   height: 24px;
   background: $cream;
-  margin-left: 10px;
+  margin-left: 0;
   width: 100%;
   flex-basis: 100%;
   position: relative;
@@ -201,10 +238,27 @@ export default {
     transform: translateX(-50%);
 
     font-weight: 700;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 22px;
     text-transform: uppercase;
     color: $gold;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .scene-scrubber {
+    flex-direction: row-reverse;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .title {
+      margin: 20px 0;
+  }
+
+  .scrubber {
+    margin-left: 10px;
   }
 }
 </style>>
