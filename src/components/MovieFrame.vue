@@ -46,7 +46,6 @@ export default {
   watch: {
     fullImage: function() {
       if (this.loadedURLs.indexOf(this.fullImage) === -1) {
-        console.log("hii");
         this.setLoader();
       }
     }

@@ -35,9 +35,9 @@
 
 <script>
 const WINDOW_PADDING = {
-    desktop: 42,
-    tablet: 24,
-    mobile: 16
+  desktop: 42,
+  tablet: 24,
+  mobile: 16
 };
 const MARGIN_LABEL_TO_BAR = 10;
 const TITLE_WIDTH = 240;
@@ -82,10 +82,9 @@ export default {
   },
   computed: {
     scrubberWidth: function() {
-    let padding = WINDOW_PADDING[this.displayMode]
+      let padding = WINDOW_PADDING[this.displayMode];
       let pctWidth =
         this.displayWidth * (this.duration / this.longestFilmLength);
-      console.log(this.displayWidth);
 
       switch (this.displayMode) {
         case "mobile":
@@ -96,9 +95,7 @@ export default {
           break;
         case "desktop":
         default:
-          return (
-            pctWidth - TITLE_WIDTH - MARGIN_LABEL_TO_BAR - padding * 2
-          );
+          return pctWidth - TITLE_WIDTH - MARGIN_LABEL_TO_BAR - padding * 2;
           break;
       }
       return pctWidth - TITLE_WIDTH - MARGIN_LABEL_TO_BAR - padding * 2;
@@ -254,7 +251,7 @@ export default {
   }
 
   .title {
-      margin: 20px 0;
+    margin: 20px 0;
   }
 
   .scrubber {
