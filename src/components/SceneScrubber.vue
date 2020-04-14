@@ -3,6 +3,7 @@
     <div
       class="scrubber"
       v-on:mousedown="pressThumb"
+      :id="`${id}__scrubber`"
       :style="`flex-basis: ${scrubberWidth}px; width: ${scrubberWidth}px;`"
     >
       <div class="thumb" :style="`left: ${Math.round(this.scrubberWidth * this.progress)}px;`">
@@ -26,6 +27,15 @@
             fill="#DAA520"
           />
         </svg>
+      </div>
+      <div v-if="!!songsList" class="songs-container">
+        <div 
+          class="song" 
+          v-for="(song, index) in songsList" 
+          :key="song.name + index" 
+          :style="`left: ${scrubberWidth * (song.start/duration)}px; width: ${Math.max(scrubberWidth * (song.end - song.start)/duration, 2)}px;`"
+          v-on:mousedown="selectSong(song)">
+        </div>
       </div>
     </div>
 
@@ -62,13 +72,15 @@ export default {
     setSeconds: {
       default: () => {}
     },
-    initialTime: {}
+    initialTime: {},
+    songsList: {}
   },
   mounted() {
     if (this.initialTime) {
       this.progress = this.initialTime / this.duration;
       //   this.time = Math.round(this.progress * this.duration);
     }
+    console.log('hii', this.songsList)
     this.formatTime();
   },
   data() {
@@ -104,12 +116,22 @@ export default {
   methods: {
     setThumbPos(e) {
       if (this.isThumbing) {
-        //   console.log(e)
         let x = e.clientX - this.scrubberLeft;
         this.progress = Math.max(Math.min(x / this.scrubberWidth, 1), 0);
         this.formatTime();
         this.setSeconds(this.id, this.time);
       }
+    },
+    selectSong(song) {
+      console.log(song)
+      let halfwayPoint = song.start + (song.end - song.start)/2;
+      console.log(halfwayPoint)
+
+       this.progress = halfwayPoint / this.duration;
+       this.scrubberLeft = this.scrubberWidth * this.progress;
+       this.formatTime();
+
+       this.setSeconds(this.id, this.time);
     },
     pressThumb(e) {
       this.isThumbing = true;
@@ -117,29 +139,27 @@ export default {
         this.progress = e.layerX / this.scrubberWidth;
         let { left, width } = e.target.getBoundingClientRect();
         this.scrubberLeft = left;
-        this.scrubberWidth = width;
         this.formatTime();
 
         this.setSeconds(this.id, this.time);
-        console.log("adding", this.id);
+        console.log('adding')
         window.addEventListener("mousemove", this.setThumbPos);
         window.addEventListener("mouseup", this.releaseThumb);
-      } else if (e.target.classList[0] == "thumb") {
-        let { left, width } = e.target.offsetParent.getBoundingClientRect();
+      } else if (e.target.classList[0] == "thumb" || e.target.classList[0] == "songs-container") {
+        let { left, width } = document.getElementById(`${this.id}__scrubber`).getBoundingClientRect();
         this.progress = (e.clientX - left) / this.scrubberWidth;
         this.scrubberLeft = left;
-        this.scrubberWidth = width;
         this.formatTime();
+        console.log('adding')
 
         this.setSeconds(this.id, this.time);
-        console.log("adding", this.id);
         window.addEventListener("mousemove", this.setThumbPos);
         window.addEventListener("mouseup", this.releaseThumb);
       }
     },
     releaseThumb() {
       this.isThumbing = false;
-      console.log("removing", this.id);
+      console.log('removing')
       window.removeEventListener("mousemove", this.setThumbPos);
       window.removeEventListener("mouseup", this.releaseThumb);
     },
@@ -183,6 +203,7 @@ export default {
 
 .scene-scrubber {
   display: block;
+
   //   padding: 20px;
 }
 
@@ -194,10 +215,10 @@ export default {
 
   font-style: italic;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 24px;
   color: #ffffff;
-  background: #ea1589;
+  background: $hot-pink;
   height: 24px;
   text-align: center;
   text-transform: uppercase;
@@ -220,6 +241,7 @@ export default {
   position: absolute;
   bottom: -7px;
   cursor: grab;
+  z-index: 20;
 
   transform: translateX(-6px);
   //   left: calc(0% - 6px);
@@ -235,10 +257,31 @@ export default {
     transform: translateX(-50%);
 
     font-weight: 700;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 22px;
     text-transform: uppercase;
     color: $gold;
+  }
+}
+
+.songs-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 24px;
+  pointer-events: none;
+
+  .song {
+    pointer-events: all;;
+    position: absolute;
+    top: 0;
+    height: 24px;
+    background: $pink-light;
+
+    &:hover {
+      background: $hot-pink;
+    }
   }
 }
 

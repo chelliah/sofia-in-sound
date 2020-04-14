@@ -77,78 +77,15 @@
       :duration="movieFrames.the_bling_ring.seconds"
       :id="movieFrames.the_bling_ring.id"
       :label="movieFrames.the_bling_ring.label"
+      :songsList="movieSongs.the_bling_ring"
     />
   </main>
 </template>
 <script>
-import lost_in_translation__single from "../data/img/lost_in_translation__single_frame.jpg";
-import lost_in_translation__full from "../data/img/lost_in_translation__full.jpg";
-import marie_antoinette__single from "../data/img/marie_antoinette__single_frame.jpg";
-import marie_antoinette__full from "../data/img/marie_antoinette__full.jpg";
-import the_virgin_suicides__single from "../data/img/the_virgin_suicides__single_frame.jpg";
-import the_virgin_suicides__full from "../data/img/the_virgin_suicides__full.jpg";
-import somewhere__single from "../data/img/somewhere__single_frame.jpg";
-import somewhere__full from "../data/img/somewhere__full.jpg";
-
-import the_bling_ring__single from "../data/img/the_bling_ring__single_frame.jpg";
-import the_bling_ring__full from "../data/img/the_bling_ring__full.jpg";
+import { MOVIES as movieFrames, DISPLAY_SIZES, SONGS as movieSongs } from '../js/constants.js'; 
 
 import MovieFrame from "./MovieFrame.vue";
 import SceneScrubber from "./SceneScrubber.vue";
-
-const DISPLAY_SIZES = {
-  mobile: "mobile",
-  tablet: "tablet",
-  desktop: "desktop"
-};
-
-const movieFrames = {
-  the_virgin_suicides: {
-    label: "The Virgin Suicides",
-    id: "the_virgin_suicides",
-    full: the_virgin_suicides__full,
-    placeholder: the_virgin_suicides__single,
-    height: 192,
-    width: 320,
-    seconds: 5820
-  },
-  lost_in_translation: {
-    label: "Lost In Translation",
-    id: "lost_in_translation",
-    full: lost_in_translation__full,
-    placeholder: lost_in_translation__single,
-    height: 173,
-    width: 320,
-    seconds: 6106
-  },
-  marie_antoinette: {
-    label: "Marie Antoinette",
-    id: "marie_antoinette",
-    full: marie_antoinette__full,
-    placeholder: marie_antoinette__single,
-    height: 180,
-    width: 320,
-    seconds: 7355
-  },
-  somewhere: {
-    label: "Somewhere",
-    id: "somewhere",
-    full: somewhere__full,
-    placeholder: somewhere__single,
-    height: 176,
-    width: 320,
-    seconds: 5907
-  },
-  the_bling_ring: {
-    label: "The Bling Ringt",
-    id: "the_bling_ring",
-    full: the_bling_ring__full,
-    placeholder: the_bling_ring__single,
-    height: 172,
-    width: 320,
-    seconds: 5433
-  }
-};
 
 export default {
   name: "App",
@@ -159,6 +96,7 @@ export default {
   data() {
     return {
       movieFrames,
+      movieSongs,
       movieFrameSeconds: 90,
       displayMode: DISPLAY_SIZES.desktop,
       displayWidth: window.innerWidth,

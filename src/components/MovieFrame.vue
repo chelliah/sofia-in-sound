@@ -45,9 +45,8 @@ export default {
   },
   watch: {
     fullImage: function() {
-      if (this.loadedURLs.indexOf(this.fullImage) === -1) {
+      
         this.setLoader();
-      }
     }
   },
   methods: {
@@ -68,10 +67,6 @@ export default {
     },
     setIsLoaded() {
       this.isLoaded = true;
-
-      if (this.loadedURLs.indexOf(this.fullImage) === -1) {
-        this.loadedURLs.push(this.fullImage);
-      }
 
       //   clearInterval(this.loaderInterval);
       //   this.loaderInterval = null;
@@ -147,5 +142,6 @@ svg .active rect {
   left: 0;
   top: 0;
   z-index: 2;
+  will-change: transform;
 }
 </style>
