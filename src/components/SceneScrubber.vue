@@ -7,7 +7,7 @@
       :style="`flex-basis: ${scrubberWidth}px; width: ${scrubberWidth}px;`"
     >
       <div class="thumb" :style="`left: ${Math.round(this.scrubberWidth * this.progress)}px;`">
-        <p class="timer">{{formattedTime}}</p>
+        <p class="timer noselect">{{formattedTime}}</p>
         <svg
           tabindex="0"
           v-on:keydown="navigateWithKeyboard"
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <h3 class="title">{{label}}</h3>
+    <h3 class="title noselect">{{label}}</h3>
   </section>
 </template>
 

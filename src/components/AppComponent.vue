@@ -40,6 +40,7 @@
       :duration="movieFrames.the_virgin_suicides.seconds"
       :id="movieFrames.the_virgin_suicides.id"
       :label="movieFrames.the_virgin_suicides.label"
+      :songsList="movieSongs.the_virgin_suicides"
     />
     <scene-scrubber
       :setSeconds="setSeconds"
@@ -59,6 +60,7 @@
       :duration="movieFrames.marie_antoinette.seconds"
       :id="movieFrames.marie_antoinette.id"
       :label="movieFrames.marie_antoinette.label"
+      :songsList="movieSongs.marie_antoinette"
     />
     <scene-scrubber
       :setSeconds="setSeconds"
