@@ -29,7 +29,9 @@ export const TAGS = {
     frequent_artist: 'frequent_artist',
     remix: 'remix',
     period_accurate: 'period_accurate',
-    character_introduction: 'character_introduction'
+    character_introduction: 'character_introduction',
+    favorite_scene_in_movie: 'favorite_scene_in_movie',
+    performed: 'performed'
 
 }
 
@@ -48,40 +50,65 @@ export const TAGS = {
 export const SONGS = {
     lost_in_translation: [
         {
+            name: "City Girl",
+            artist: "Kevin Shields",
+            start: timeInSeconds(0,42),
+            end: timeInSeconds(1,1),
+            tags: [TAGS.non_diegetic, TAGS.intro],
+        },
+        {
             name: "Girls",
             artist: "Death In Vegas",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(1,7),
+            end: timeInSeconds(2,31),
+            tags: [TAGS.non_diegetic, TAGS.character_introduction],
             //spotify:track:
             uri: "spotify:track:1298aTMtgjFRKkvas3KIaZ"
         },
         {
             name: "Minuetto",
             artist: "Dominic Sands",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(3,49),
+            end: timeInSeconds(4,2),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: ""
         },
         {
             name: "The Thrill Is Gone",
-            artist: "Catherine Lambert",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            artist: "Julie London",
+            start: timeInSeconds(4,3),
+            end: timeInSeconds(5,19),
+            tags: [TAGS.diegetic, TAGS.performed],
             //spotify:track:
-            uri: ""
+            uri: "spotify:track:2MhpoyUQ1gl6P4yVDwKxH3"
+        },
+        {
+            name: "On The Subway",
+            artist: "Brian Reitzell & Roger J. Manning Jr",
+            start: timeInSeconds(12,0),
+            end: timeInSeconds(12,40),
+            tags: [TAGS.non_diegetic, TAGS.ambient],
+            //spotify:track:
+            youtube: "https://www.youtube.com/watch?v=HB8TSsvMPcw"
         },
         {
             name: "Fantino",
             artist: "Sebastian Tellier",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(14,28),
+            end: timeInSeconds(15,14),
+            tags: [TAGS.non_diegetic, TAGS.ambient ],
             //spotify:track:
             uri: "spotify:track:2AhczuNgqzAyKDHtDMFgVC"
+        },
+        {
+            name: "Shibuya",
+            artist: "Brian Reitzell & Roger J. Manning Jr",
+            start: timeInSeconds(19,0),
+            end: timeInSeconds(19,29),
+            tags: [TAGS.non_diegetic, TAGS.ambient],
+            //spotify:track:
+            youtube: "https://www.youtube.com/watch?v=F4C-VBH9f8U"
         },
 
         {
@@ -94,122 +121,125 @@ export const SONGS = {
             uri: "spotify:track:2k2wECSLjBF2Purv1TwMdK"
         },
 
-        {
-            name: "Chord Left",
-            artist: "Agnes Obel",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
-            //spotify:track:
-            uri: "spotify:track:3SelopnR6OJ9pS2NIH5RHI"
-        },
+        // {
+        //     name: "Chord Left",
+        //     artist: "Agnes Obel",
+        //     start: timeInSeconds(0,0),
+        //     end: timeInSeconds(0,0),
+        //     tags: [],
+        //     //spotify:track:
+        //     uri: "spotify:track:3SelopnR6OJ9pS2NIH5RHI"
+        // },
         {
             name: "Torn Into",
             artist: "Mount Sims",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(20,1),
+            end: timeInSeconds(20,20),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: ""
         },
         {
             name: "Scarborough Fair/Canticle",
             artist: "Simon and Garfunkel",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(23,36),
+            end: timeInSeconds(24,8 ),
+            tags: [TAGS.diegetic, TAGS.performed],
             //spotify:track:
             uri: "spotify:track:53uzBMME2GSfpUVtOtiLvA"
         },
-        {
-            name: "Blue Atmosphere",
-            artist: "Francesco Santucci, Antonello Vannucchi, Giorgio Rosciglione, Giovanni Cristiani",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
-            //spotify:track:
-            uri: ""
-        },
+        // {
+            // 31ish to 33ish 
+        //     name: "Blue Atmosphere",
+        //     artist: "Francesco Santucci, Antonello Vannucchi, Giorgio Rosciglione, Giovanni Cristiani",
+        //     start: timeInSeconds(0,0),
+        //     end: timeInSeconds(0,0),
+        //     tags: [],
+        //     //spotify:track:
+        //     uri: "spotify:track:5xGCPtdqZGjG15Q9Kqzp46"
+        // },
         {
             name: "Love Gun",
             artist: "Rick James",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(34,38),
+            end: timeInSeconds(35,35),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: "spotify:track:20HLXTEdpPJAxXW7byYXaR"
         },
         {
             name: "Muyu",
             artist: "Des-Row Union",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(35,43),
+            end: timeInSeconds(36,5),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: ""
         },
         {
             name: "You Stepped Out of a Dream",
-            artist: "Catherine Lambert",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            artist: "Nat King Cole (performed by Catherine Lambert)",
+            start: timeInSeconds(37,7),
+            end: timeInSeconds(38,50),
+            tags: [TAGS.diegetic, TAGS.performed],
             //spotify:track:
-            uri: ""
+            uri: "spotify:track:2wggYMBTqq7qzIJK42n4Tt"
         },
         {
             name: "Tommib",
             artist: "Squarepusher",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(40,31),
+            end: timeInSeconds(41,25),
+            tags: [TAGS.non_diegetic, TAGS.favorite_scene_in_movie],
             //spotify:track:
             uri: "spotify:track:5bgbePi06Jpajb3CfgEhgJ"
         },
         {
             name: "The State We're In",
             artist: "The Chemical Brothers",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(43,42),
+            end: timeInSeconds(45,23),
+            tags: [TAGS.diegetic],
             //spotify:track:
-            uri: ""
+            // actual part of track is later on (last minute)
+            uri: "spotify:track:5cTitgnXxwBuRUJMEnEgtk"
         },
         {
             name: "She Gets Around",
             artist: "TV Eyes",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(45,24),
+            end: timeInSeconds(46,31 ),
+            tags: [TAGS.diegetic],
             //spotify:track:
-            uri: ""
+            uri: "spotify:track:6HDKdu5JvkzNoK4UG7wlBY"
         },
         {
             name: "Feeling I Get",
             artist: "Mary Butterworth Group",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(47,9),
+            end: timeInSeconds(47,56),
+            tags: [TAGS.diegetic],
             //spotify:track:
-            uri: ""
-        },
-        {
-            name: "Tomei Tengu BGM",
-            artist: "Takeo Watanabe",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
-            //spotify:track:
-            uri: ""
+            youtube: "https://www.youtube.com/watch?v=KMfB8CL1pug"
         },
         {
             name: "Too Young",
             artist: "Phoenix",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(47,57),
+            end: timeInSeconds(48,24),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: "spotify:track:2THkQauDWMvJgXFGPY4iKB"
+        },
+
+        {
+            name: "God Save The Queen",
+            artist: "Sex Pistoles (performed by Fumihiro Hayashi)",
+            start: timeInSeconds(48,25),
+            end: timeInSeconds(48,49),
+            tags: [TAGS.diegetic, TAGS.performed],
+            //spotify:track:
+            uri: "spotify:track:6ui6l3ZNvlrGQZArwo8195"
         },
         {
             name: "Fighting For",
@@ -221,139 +251,155 @@ export const SONGS = {
             uri: "spotify:track:0l7vf9vQYZMfc3GQdJBAU0"
         },
         {
-            name: "God Save The Queen",
-            artist: "Fumihiro Hayashi",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
-            //spotify:track:
-            uri: ""
-        },
-        {
             name: "(What's So Funny 'Bout) Peace, Love and Understanding",
-            artist: "",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            artist: "Elvis Costello & The Attractions (performed by Bill Murray)",
+            start: timeInSeconds(48,50),
+            end: timeInSeconds(49,40),
+            tags: [TAGS.diegetic, TAGS.performed],
             //spotify:track:
-            uri: ""
+            uri: "spotify:track:0dhzPXfQUdjNVsjVV7n4iD"
         },
         {
             name: "Brass In Pocket",
-            artist: "Pretenders",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            artist: "Pretenders (performed by Scarlett Johannson)",
+            start: timeInSeconds(49,41),
+            end: timeInSeconds(50,29),
+            tags: [TAGS.diegetic, TAGS.performed],
             //spotify:track:
             uri: "spotify:track:3mAlVFFUrIBZcHSRXY0ik6"
         },
         {
             name: "More Than This",
-            artist: "Roxy Music",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            artist: "Roxy Music (performed by Bill Murray)",
+            start: timeInSeconds(50,33),
+            end: timeInSeconds(51,40),
+            tags: [TAGS.diegetic, TAGS.performed],
             //spotify:track:
             uri: "spotify:track:6SsP9PE7JT83QZA8kEYHVV"
         },
         {
             name: "Kaze Wo Atsume",
             artist: "Bini Cocotte",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(51,41),
+            end: timeInSeconds(52,29),
+            tags: [TAGS.diegetic, TAGS.performed],
             //spotify:track:
             uri: "spotify:track:4LKzli0rhdrSkeOuyuuyr3"
         },
         {
             name: "Sometimes",
             artist: "My Bloody Valentine",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(52,30),
+            end: timeInSeconds(54,9),
+            tags: [TAGS.non_diegetic],
             //spotify:track:
-            uri: ""
+            uri: "spotify:track:4muQTwBka05lBLGy7lSDKF"
         },
         {
             name: "Fuck the Pain Away",
             artist: "Peaches",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(63,10),
+            end: timeInSeconds(64,37),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: "spotify:track:1XHFob24QklIXtLRopKirJ"
         },
         {
             name: "Nobody Does It Better",
             artist: "Carly Simon",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(65,10),
+            end: timeInSeconds(65,54),
+            tags: [TAGS.diegetic, TAGS.performed],
             //spotify:track:
             uri: "spotify:track:4LvtB7drFpQ4UzmFHcSnCC"
         },
         {
+            name: "Are You Awake?",
+            artist: "Kevin Shields",
+            start: timeInSeconds(65, 55 ),
+            end: timeInSeconds(67, 20),
+            tags: [TAGS.non_diegetic, TAGS.ambient],
+            youtube: "https://www.youtube.com/watch?v=v5ynOUVjYx8"
+        },
+        {
             name: "Alone in Kyoto",
             artist: "Air",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(73,25),
+            end: timeInSeconds(76,20),
+            tags: [TAGS.non_diegetic, TAGS.ambient],
             //spotify:track:
             uri: "spotify:track:40UlFC0dIxv7lAEJaPZLnm"
         },
-        {
-            name: "Midnight At The Oasis",
-            artist: "Maria Muldaur",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
-            //spotify:track:
-            uri: "spotify:track:63Nj3NsQkLQs2MKgWk1Di6"
-        },
+        // {
+        //     name: "Midnight At The Oasis",
+        //     artist: "Maria Muldaur",
+        //     start: timeInSeconds(0,0),
+        //     end: timeInSeconds(0,0),
+        //     tags: [],
+        //     //spotify:track:
+        //     uri: "spotify:track:63Nj3NsQkLQs2MKgWk1Di6"
+        // },
         {
             name: "So Into You",
             artist: "Atlanta Rhythym Section",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(87,23),
+            end: timeInSeconds(88,18),
+            tags: [TAGS.diegetic, TAGS.performed],
             //spotify:track:
             uri: "spotify:track:5duHt5pYPW8kN5ufMbrBVc"
         },
         {
             name: "Just LIke Honey",
             artist: "The Jesus and Mary Chain",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(93,51),
+            end: timeInSeconds(96,46),
+            tags: [TAGS.non_diegetic, TAGS.end_credits],
             //spotify:track:
             uri: "spotify:track:11L2mT8T10C8ITMcJv1ipy"
         },
         {
-            name: "La Dolce Vita",
-            artist: "Franco Ferrara and His Orchestra",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
-            //spotify:track:
-            uri: "spotify:track:5dOOHrgDyKmTflXUhywmeO"
+            name: "City Girl",
+            artist: "Kevin Shields",
+            start: timeInSeconds(96,47),
+            end: timeInSeconds(99,34),
+            TAGS: [TAGS.non_diegetic, TAGS.end_credits],
+            youtube: "https://www.youtube.com/watch?v=x-JQe3f6tc0"
         },
         {
-            name: "When Doves Cry",
-            artist: "Patti Smith",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            name: "Kaze Wo Atsume",
+            artist: "Bini Cocotte",
+            start: timeInSeconds(99,35),
+            end: timeInSeconds(101,38),
+            tags: [TAGS.non_diegetic, TAGS.end_credits],
             //spotify:track:
-            uri: "spotify:track:10RKmQqpGEOnHORPp5fPej"
+            uri: "spotify:track:4LKzli0rhdrSkeOuyuuyr3"
         },
-        {            
-            name: "Bad",
-            artist: "Starless",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
-            uri: "spotify:track:7Mdq4qEWM9eqMNwZOyr1I3"
-        }
+        // {
+        //     name: "La Dolce Vita",
+        //     artist: "Franco Ferrara and His Orchestra",
+        //     start: timeInSeconds(0,0),
+        //     end: timeInSeconds(0,0),
+        //     tags: [],
+        //     //spotify:track:
+        //     uri: "spotify:track:5dOOHrgDyKmTflXUhywmeO"
+        // },
+        // {
+        //     name: "When Doves Cry",
+        //     artist: "Patti Smith",
+        //     start: timeInSeconds(0,0),
+        //     end: timeInSeconds(0,0),
+        //     tags: [],
+        //     //spotify:track:
+        //     uri: "spotify:track:10RKmQqpGEOnHORPp5fPej"
+        // },
+        // {            
+        //     name: "Bad",
+        //     artist: "Starless",
+        //     start: timeInSeconds(0,0),
+        //     end: timeInSeconds(0,0),
+        //     tags: [],
+        //     uri: "spotify:track:7Mdq4qEWM9eqMNwZOyr1I3"
+        // }
 
 
     ],
@@ -361,17 +407,17 @@ export const SONGS = {
         {
             name: "Love Like A Sunset Part I",
             artist: "Phoenix",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [TAGS.non_diegetic, TASG.intro],
+            start: timeInSeconds(3,10),
+            end: timeInSeconds(4,0),
+            tags: [TAGS.non_diegetic, TAGS.intro],
             //spotify:track:
             uri: "spotify:track:0oliFCF8f7IhkFXjFPoQ7J"
         },
         {
             name: "My Hero",
             artist: "Foo Fighters",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
+            start: timeInSeconds(4,11),
+            end: timeInSeconds(6,48),
             tags: [TAGS.diegetic],
             //spotify:track:
             uri: "spotify:track:4dVbhS6OiYvFikshyaQaCN"
@@ -379,8 +425,8 @@ export const SONGS = {
         {
             name: "1 Thing",
             artist: "Amerie",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
+            start: timeInSeconds(13,21),
+            end: timeInSeconds(15,25 ),
             tags: [TAGS.diegetic],
             //spotify:track:
             uri: "spotify:track:1mnqraQ8oV8MX92rdOFLWW"
@@ -388,17 +434,17 @@ export const SONGS = {
         {
             name: "Cool",
             artist: "Gwen Stefani",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [TAGS.diegetic],
+            start: timeInSeconds(18,6),
+            end: timeInSeconds(21,5),
+            tags: [TAGS.diegetic, TAGS.favorite_scene_in_movie],
             //spotify:track:
             uri: "spotify:track:1oPHQirLVcgj85NWdiyuJD"
         },
         {
             name: "Love Theme From Kiss",
             artist: "Kiss",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
+            start: timeInSeconds(23,7),
+            end: timeInSeconds(24,10),
             tags: [],
             //spotify:track:
             uri: "spotify:track:2YIjGaUpOAjCJlhQFYsqLH"
@@ -406,8 +452,8 @@ export const SONGS = {
         {
             name: "Look",
             artist: "Sebastien Tellier",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
+            start: timeInSeconds(24,11),
+            end: timeInSeconds(25,52),
             tags: [],
             //spotify:track:
             uri: "spotify:track:0GVQb2UqgxEUrXidPgklFj"
@@ -415,80 +461,81 @@ export const SONGS = {
         {
             name: "Massage Music",
             artist: "William Storkson",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(39,32),
+            end: timeInSeconds(41,12),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: ""
         },
-        {
-            name: "Gandhi Fix",
-            artist: "William Storkson",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
-            //spotify:track:
-            uri: ""
-        },
+        // {
+        //     name: "Gandhi Fix",
+        //     artist: "William Storkson",
+        //     start: timeInSeconds(0,0),
+        //     end: timeInSeconds(0,0),
+        //     tags: [],
+        //     //spotify:track:
+        //     uri: ""
+        // },
         {
             name: "So Lonely",
             artist: "The Police",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(43,9),
+            end: timeInSeconds(44,14),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: "spotify:track:3rNYilJa7V26eOvQqSpbbk"
         },
         {
             name: "20th Century Boy",
             artist: "T. Rex",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(44,31),
+            end: timeInSeconds(45,58),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: "spotify:track:66hdYurKbEfP74fvWtR7mj"
         },
-        {
-            name: "Boo Riley",
-            artist: "Boo Riley",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
-            //spotify:track:
-            uri: "spotify:track:6SgvkqEE5hhvnkDHjHtv0W"
-        },
+        // {
+        //     name: "Boo Riley",
+        //     artist: "Boo Riley",
+        //     start: timeInSeconds(0,0),
+        //     end: timeInSeconds(0,0),
+        //     tags: [],
+        //     //spotify:track:
+        //     uri: "spotify:track:6SgvkqEE5hhvnkDHjHtv0W"
+        // },
         {
             name: "Che Si Fa",
             artist: "Valeria Marini",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(61,13),
+            end: timeInSeconds(63,3),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: ""
         },
         {
             name: "Teddy Bear",
             artist: "Romulo",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(64,2),
+            end: timeInSeconds(65,11),
+            tags: [TAGS.diegetic],
             //spotify:track:
             uri: ""
         },
         {
             name: "I'll Try Anything Once",
             artist: "The Strokes",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(73,11),
+            end: timeInSeconds(76,25),
+            tags: [TAGS.non_diegetic],
             //spotify:track:
             uri: "spotify:track:1k4OsQujxXPLij0ZsTFlMx"
         },
+        //some guitar loop around 79 min
         {
             name: "Love Like A Sunset Part II",
             artist: "Phoenix",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
+            start: timeInSeconds(91,1),
+            end: timeInSeconds(95,10),
             tags: [TAGS.end_credits],
             //spotify:track:
             uri: "spotify:track:4V134V3PE3H1kep1J7I9eA"
@@ -496,9 +543,9 @@ export const SONGS = {
         {
             name: "Smoke Gets In Your Eyes",
             artist: "Bryan Ferry",
-            start: timeInSeconds(0,0),
-            end: timeInSeconds(0,0),
-            tags: [],
+            start: timeInSeconds(95,11 ),
+            end: timeInSeconds(98,0),
+            tags: [TAGS.end_credits],
             //spotify:track:
             uri: "spotify:track:1ZmvxisQ7JWqmybY2PC5Ip"
         },

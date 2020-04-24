@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <h3 class="title noselect">{{label}}</h3>
+    <h3 :class="`title noselect${selected ? ' selected' : ''}`" v-on:click="setSeconds(id, time)">{{label}}</h3>
   </section>
 </template>
 
@@ -50,7 +50,7 @@ const WINDOW_PADDING = {
   mobile: 16
 };
 const MARGIN_LABEL_TO_BAR = 10;
-const TITLE_WIDTH = 240;
+const TITLE_WIDTH = 220;
 
 export default {
   name: "SceneScrubber",
@@ -68,6 +68,9 @@ export default {
       default: 60 * 100 + 31
     },
     label: {},
+    selected: {
+      default: false
+    },
     id: {},
     setSeconds: {
       default: () => {}
@@ -80,7 +83,6 @@ export default {
       this.progress = this.initialTime / this.duration;
       //   this.time = Math.round(this.progress * this.duration);
     }
-    console.log('hii', this.songsList)
     this.formatTime();
   },
   data() {
@@ -123,9 +125,7 @@ export default {
       }
     },
     selectSong(song) {
-      console.log(song)
       let halfwayPoint = song.start + (song.end - song.start)/2;
-      console.log(halfwayPoint)
 
        this.progress = halfwayPoint / this.duration;
        this.scrubberLeft = this.scrubberWidth * this.progress;
@@ -142,7 +142,6 @@ export default {
         this.formatTime();
 
         this.setSeconds(this.id, this.time);
-        console.log('adding')
         window.addEventListener("mousemove", this.setThumbPos);
         window.addEventListener("mouseup", this.releaseThumb);
       } else if (e.target.classList[0] == "thumb" || e.target.classList[0] == "songs-container") {
@@ -150,7 +149,6 @@ export default {
         this.progress = (e.clientX - left) / this.scrubberWidth;
         this.scrubberLeft = left;
         this.formatTime();
-        console.log('adding')
 
         this.setSeconds(this.id, this.time);
         window.addEventListener("mousemove", this.setThumbPos);
@@ -159,7 +157,6 @@ export default {
     },
     releaseThumb() {
       this.isThumbing = false;
-      console.log('removing')
       window.removeEventListener("mousemove", this.setThumbPos);
       window.removeEventListener("mouseup", this.releaseThumb);
     },
@@ -208,22 +205,28 @@ export default {
 }
 
 .title {
-  width: 240px;
-  flex-basis: 240px;
+  width: 242px;
+  flex-basis: 220px;
   flex-shrink: 0;
   /* The Virgin Suicides */
 
   font-style: italic;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
   color: #ffffff;
-  background: $hot-pink;
   height: 24px;
   text-align: center;
   text-transform: uppercase;
 
   margin: 8px 0 32px 0;
+
+  background: $pink-light;
+  cursor: pointer;
+
+  &:hover, &.selected {
+    background: $hot-pink;
+  }
 }
 
 .scrubber {

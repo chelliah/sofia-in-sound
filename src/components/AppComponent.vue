@@ -33,6 +33,7 @@
       :seconds="movieFrameSeconds"
     />
     <scene-scrubber
+      :selected="activeMovie == movieFrames.the_virgin_suicides.id"
       :setSeconds="setSeconds"
       :longestFilmLength="longestFilmLength"
       :displayMode="displayMode"
@@ -43,6 +44,7 @@
       :songsList="movieSongs.the_virgin_suicides"
     />
     <scene-scrubber
+      :selected="activeMovie == movieFrames.lost_in_translation.id"
       :setSeconds="setSeconds"
       :initialTime="movieFrameSeconds"
       :longestFilmLength="longestFilmLength"
@@ -51,8 +53,10 @@
       :duration="movieFrames.lost_in_translation.seconds"
       :id="movieFrames.lost_in_translation.id"
       :label="movieFrames.lost_in_translation.label"
+      :songsList="movieSongs.lost_in_translation"
     />
     <scene-scrubber
+      :selected="activeMovie == movieFrames.marie_antoinette.id"
       :setSeconds="setSeconds"
       :longestFilmLength="longestFilmLength"
       :displayMode="displayMode"
@@ -63,6 +67,7 @@
       :songsList="movieSongs.marie_antoinette"
     />
     <scene-scrubber
+      :selected="activeMovie == movieFrames.somewhere.id"
       :setSeconds="setSeconds"
       :longestFilmLength="longestFilmLength"
       :displayMode="displayMode"
@@ -70,8 +75,10 @@
       :duration="movieFrames.somewhere.seconds"
       :id="movieFrames.somewhere.id"
       :label="movieFrames.somewhere.label"
+      :songsList="movieSongs.somewhere"
     />
     <scene-scrubber
+      :selected="activeMovie == movieFrames.the_bling_ring.id"
       :setSeconds="setSeconds"
       :longestFilmLength="longestFilmLength"
       :displayMode="displayMode"
@@ -84,7 +91,11 @@
   </main>
 </template>
 <script>
-import { MOVIES as movieFrames, DISPLAY_SIZES, SONGS as movieSongs } from '../js/constants.js'; 
+import {
+  MOVIES as movieFrames,
+  DISPLAY_SIZES,
+  SONGS as movieSongs
+} from "../js/constants.js";
 
 import MovieFrame from "./MovieFrame.vue";
 import SceneScrubber from "./SceneScrubber.vue";
@@ -107,8 +118,11 @@ export default {
     };
   },
   methods: {
-    setSeconds(activeMovie, seconds) {
+    setActiveMovie(activeMovie) {
       this.activeMovie = activeMovie;
+    },
+    setSeconds(activeMovie, seconds) {
+      this.setActiveMovie(activeMovie);
       this.movieFrameSeconds = seconds;
     },
     setWidth() {
