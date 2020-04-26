@@ -6,7 +6,10 @@
       :id="`${id}__scrubber`"
       :style="`flex-basis: ${scrubberWidth}px; width: ${scrubberWidth}px;`"
     >
-      <div class="thumb" :style="`left: ${Math.round(this.scrubberWidth * this.progress)}px;`">
+      <div
+        :class="`thumb${selected ? ' selected' : ''}`"
+        :style="`left: ${Math.round(this.scrubberWidth * this.progress)}px;`"
+      >
         <p class="timer noselect">{{formattedTime}}</p>
         <svg
           tabindex="0"
@@ -19,27 +22,30 @@
         >
           <path
             d="M0.947266 7.67431e-06L11.4585 -8.22247e-07L7.07884 10.1892H5.32696L0.947266 7.67431e-06Z"
-            fill="#DAA520"
+            class="thumb--cursor"
           />
-          <path d="M5.32617 10.1891H7.07806V27.4324H5.32617V10.1891Z" fill="#DAA520" />
+          <path d="M5.32617 10.1891H7.07806V27.4324H5.32617V10.1891Z" class="thumb--cursor" />
           <path
             d="M11.459 29L0.947663 29L5.32738 18.8108L7.07927 18.8108L11.459 29Z"
-            fill="#DAA520"
+            class="thumb--cursor"
           />
         </svg>
       </div>
       <div v-if="!!songsList" class="songs-container">
-        <div 
-          class="song" 
-          v-for="(song, index) in songsList" 
-          :key="song.name + index" 
+        <div
+          class="song"
+          v-for="(song, index) in songsList"
+          :key="song.name + index"
           :style="`left: ${scrubberWidth * (song.start/duration)}px; width: ${Math.max(scrubberWidth * (song.end - song.start)/duration, 2)}px;`"
-          v-on:mousedown="selectSong(song)">
-        </div>
+          v-on:mousedown="selectSong(song)"
+        ></div>
       </div>
     </div>
 
-    <h3 :class="`title noselect${selected ? ' selected' : ''}`" v-on:click="setSeconds(id, time)">{{label}}</h3>
+    <h3
+      :class="`title noselect${selected ? ' selected' : ''}`"
+      v-on:click="setSeconds(id, time)"
+    >{{label}}</h3>
   </section>
 </template>
 
@@ -125,13 +131,13 @@ export default {
       }
     },
     selectSong(song) {
-      let halfwayPoint = song.start + (song.end - song.start)/2;
+      let halfwayPoint = song.start + (song.end - song.start) / 2;
 
-       this.progress = halfwayPoint / this.duration;
-       this.scrubberLeft = this.scrubberWidth * this.progress;
-       this.formatTime();
+      this.progress = halfwayPoint / this.duration;
+      this.scrubberLeft = this.scrubberWidth * this.progress;
+      this.formatTime();
 
-       this.setSeconds(this.id, this.time);
+      this.setSeconds(this.id, this.time);
     },
     pressThumb(e) {
       this.isThumbing = true;
@@ -144,8 +150,13 @@ export default {
         this.setSeconds(this.id, this.time);
         window.addEventListener("mousemove", this.setThumbPos);
         window.addEventListener("mouseup", this.releaseThumb);
-      } else if (e.target.classList[0] == "thumb" || e.target.classList[0] == "songs-container") {
-        let { left, width } = document.getElementById(`${this.id}__scrubber`).getBoundingClientRect();
+      } else if (
+        e.target.classList[0] == "thumb" ||
+        e.target.classList[0] == "songs-container"
+      ) {
+        let { left, width } = document
+          .getElementById(`${this.id}__scrubber`)
+          .getBoundingClientRect();
         this.progress = (e.clientX - left) / this.scrubberWidth;
         this.scrubberLeft = left;
         this.formatTime();
@@ -224,7 +235,8 @@ export default {
   background: $pink-light;
   cursor: pointer;
 
-  &:hover, &.selected {
+  &:hover,
+  &.selected {
     background: $hot-pink;
   }
 }
@@ -254,6 +266,7 @@ export default {
   p {
     pointer-events: none;
     margin: 0;
+    opacity: 0;
     position: absolute;
     left: 50%;
     top: -20px;
@@ -263,7 +276,22 @@ export default {
     font-size: 14px;
     line-height: 22px;
     text-transform: uppercase;
-    color: $gold;
+    color: $gold-light;
+  }
+
+  .thumb--cursor {
+    fill: $gold-light;
+  }
+
+  &:hover,
+  &.selected {
+    p {
+      opacity: 1;
+      color: $gold;
+    }
+    .thumb--cursor {
+      fill: $gold;
+    }
   }
 }
 
@@ -276,7 +304,7 @@ export default {
   pointer-events: none;
 
   .song {
-    pointer-events: all;;
+    pointer-events: all;
     position: absolute;
     top: 0;
     height: 24px;
