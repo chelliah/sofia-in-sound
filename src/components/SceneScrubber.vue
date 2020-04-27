@@ -33,10 +33,10 @@
       </div>
       <div v-if="!!songsList" class="songs-container">
         <div
-          class="song"
           v-for="(song, index) in songsList"
+          :class="`song${ activeSong && activeSong.name == song.name ? ' selected' : ''}`"
           :key="song.name + index"
-          :style="`left: ${scrubberWidth * (song.start/duration)}px; width: ${Math.max(scrubberWidth * (song.end - song.start)/duration, 2)}px;`"
+          :style="songStyle(song)"
           v-on:mousedown="selectSong(song)"
         ></div>
       </div>
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { TAGS } from '../js/constants.js'
 const WINDOW_PADDING = {
   desktop: 42,
   tablet: 24,
@@ -73,6 +74,9 @@ export default {
     duration: {
       default: 60 * 100 + 31
     },
+    hoverTag: {
+      default: null,
+    },
     label: {},
     selected: {
       default: false
@@ -80,6 +84,12 @@ export default {
     id: {},
     setSeconds: {
       default: () => {}
+    },
+    setSong: {
+      default: () => {}
+    },
+    activeSong: {
+      default: null
     },
     initialTime: {},
     songsList: {}
@@ -89,6 +99,12 @@ export default {
       this.progress = this.initialTime / this.duration;
       //   this.time = Math.round(this.progress * this.duration);
     }
+
+    this.songsList.forEach(song => {
+      if (!song.tags) {
+        debugger;
+      }
+    })
     this.formatTime();
   },
   data() {
@@ -97,7 +113,8 @@ export default {
       isThumbing: false,
       formattedTime: null,
       scrubberLeft: 0,
-      time: 0
+      time: 0,
+      tags: TAGS
     };
   },
   computed: {
@@ -122,12 +139,27 @@ export default {
     }
   },
   methods: {
+    update() {
+        this.formatTime();
+        this.checkForSong();
+        this.setSeconds(this.id, this.time);
+    },
+    checkForSong() {
+      let song = this.songsList.find(song => {
+        return song.start < this.time && song.end > this.time
+      })
+
+      if(song) {
+        this.setSong(song)
+      } else {
+        this.setSong(null)
+      }
+    },
     setThumbPos(e) {
       if (this.isThumbing) {
         let x = e.clientX - this.scrubberLeft;
         this.progress = Math.max(Math.min(x / this.scrubberWidth, 1), 0);
-        this.formatTime();
-        this.setSeconds(this.id, this.time);
+        this.update()
       }
     },
     selectSong(song) {
@@ -135,9 +167,8 @@ export default {
 
       this.progress = halfwayPoint / this.duration;
       this.scrubberLeft = this.scrubberWidth * this.progress;
-      this.formatTime();
+      this.update()
 
-      this.setSeconds(this.id, this.time);
     },
     pressThumb(e) {
       this.isThumbing = true;
@@ -145,9 +176,8 @@ export default {
         this.progress = e.layerX / this.scrubberWidth;
         let { left, width } = e.target.getBoundingClientRect();
         this.scrubberLeft = left;
-        this.formatTime();
+        this.update()
 
-        this.setSeconds(this.id, this.time);
         window.addEventListener("mousemove", this.setThumbPos);
         window.addEventListener("mouseup", this.releaseThumb);
       } else if (
@@ -159,9 +189,8 @@ export default {
           .getBoundingClientRect();
         this.progress = (e.clientX - left) / this.scrubberWidth;
         this.scrubberLeft = left;
-        this.formatTime();
+        this.update()
 
-        this.setSeconds(this.id, this.time);
         window.addEventListener("mousemove", this.setThumbPos);
         window.addEventListener("mouseup", this.releaseThumb);
       }
@@ -174,13 +203,11 @@ export default {
     navigateWithKeyboard(e) {
       if (e.which === 39) {
         this.progress = Math.min(this.progress + 0.01, 1);
-        this.formatTime();
-        this.setSeconds(this.id, this.time);
+        this.update()
       }
       if (e.which === 37) {
         this.progress = Math.max(this.progress - 0.01, 0);
-        this.formatTime();
-        this.setSeconds(this.id, this.time);
+        this.update()
       }
     },
 
@@ -196,13 +223,16 @@ export default {
       this.formattedTime = `${hours > 0 ? `${hours}:` : ""}${
         minutes < 10 ? `0${minutes}` : minutes
       }:${seconds < 10 ? `0${seconds}` : seconds}`;
+    },
+    songStyle(song) {
+      return `
+            left: ${this.scrubberWidth * (song.start/this.duration)}px; 
+            width: ${Math.max(this.scrubberWidth * (song.end - song.start)/this.duration, 2)}px;
+            ${ this.hoverTag && song.tags.indexOf(this.hoverTag) > -1 ? `background: ${this.tags[this.hoverTag].color};`: ''}
+            ${ this.hoverTag && song.tags.indexOf(this.hoverTag) == -1 ? 'opacity: 0.4;': ''}
+          `
     }
   }
-  // computed: {
-  //     thumbPosition() {
-
-  //     }
-  // }
 };
 </script>
 
@@ -310,7 +340,7 @@ export default {
     height: 24px;
     background: $pink-light;
 
-    &:hover {
+    &:hover, &.selected {
       background: $hot-pink;
     }
   }

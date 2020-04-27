@@ -32,62 +32,25 @@
       :height="movieFrames[activeMovie].height"
       :seconds="movieFrameSeconds"
     />
+
     <scene-scrubber
-      :selected="activeMovie == movieFrames.the_virgin_suicides.id"
+      v-for="(movie, name) in movieFrames"
+      :key="name"
+      :selected="activeMovie == movie.id"
+      :activeSong="song.data"
       :setSeconds="setSeconds"
+      :setSong="setSong"
+      :hoverTag="hoverTag"
       :longestFilmLength="longestFilmLength"
       :displayMode="displayMode"
       :displayWidth="displayWidth"
-      :duration="movieFrames.the_virgin_suicides.seconds"
-      :id="movieFrames.the_virgin_suicides.id"
-      :label="movieFrames.the_virgin_suicides.label"
-      :songsList="movieSongs.the_virgin_suicides"
+      :duration="movie.seconds"
+      :id="movie.id"
+      :label="movie.label"
+      :songsList="movieSongs[name]"
     />
-    <scene-scrubber
-      :selected="activeMovie == movieFrames.lost_in_translation.id"
-      :setSeconds="setSeconds"
-      :initialTime="movieFrameSeconds"
-      :longestFilmLength="longestFilmLength"
-      :displayMode="displayMode"
-      :displayWidth="displayWidth"
-      :duration="movieFrames.lost_in_translation.seconds"
-      :id="movieFrames.lost_in_translation.id"
-      :label="movieFrames.lost_in_translation.label"
-      :songsList="movieSongs.lost_in_translation"
-    />
-    <scene-scrubber
-      :selected="activeMovie == movieFrames.marie_antoinette.id"
-      :setSeconds="setSeconds"
-      :longestFilmLength="longestFilmLength"
-      :displayMode="displayMode"
-      :displayWidth="displayWidth"
-      :duration="movieFrames.marie_antoinette.seconds"
-      :id="movieFrames.marie_antoinette.id"
-      :label="movieFrames.marie_antoinette.label"
-      :songsList="movieSongs.marie_antoinette"
-    />
-    <scene-scrubber
-      :selected="activeMovie == movieFrames.somewhere.id"
-      :setSeconds="setSeconds"
-      :longestFilmLength="longestFilmLength"
-      :displayMode="displayMode"
-      :displayWidth="displayWidth"
-      :duration="movieFrames.somewhere.seconds"
-      :id="movieFrames.somewhere.id"
-      :label="movieFrames.somewhere.label"
-      :songsList="movieSongs.somewhere"
-    />
-    <scene-scrubber
-      :selected="activeMovie == movieFrames.the_bling_ring.id"
-      :setSeconds="setSeconds"
-      :longestFilmLength="longestFilmLength"
-      :displayMode="displayMode"
-      :displayWidth="displayWidth"
-      :duration="movieFrames.the_bling_ring.seconds"
-      :id="movieFrames.the_bling_ring.id"
-      :label="movieFrames.the_bling_ring.label"
-      :songsList="movieSongs.the_bling_ring"
-    />
+    
+    <song-footer :setIsPlaying="setIsPlaying" :isPlaying="song.playing" :song="song.data" :setTag="setTag"/>
   </main>
 </template>
 <script>
@@ -99,12 +62,14 @@ import {
 
 import MovieFrame from "./MovieFrame.vue";
 import SceneScrubber from "./SceneScrubber.vue";
+import SongFooter from "./SongFooter.vue";
 
 export default {
   name: "App",
   components: {
     MovieFrame,
-    SceneScrubber
+    SceneScrubber,
+    SongFooter
   },
   data() {
     return {
@@ -114,16 +79,31 @@ export default {
       displayMode: DISPLAY_SIZES.desktop,
       displayWidth: window.innerWidth,
       activeMovie: movieFrames.lost_in_translation.id,
-      longestFilmLength: movieFrames.marie_antoinette.seconds
+      longestFilmLength: movieFrames.marie_antoinette.seconds,
+      hoverTag: null,
+      song: {
+        playing: false,
+        data: null
+      }
     };
   },
   methods: {
+    setSong(song = null) {
+      this.setIsPlaying(song !== null);
+      this.song.data = song;
+    },
+    setIsPlaying(isPlaying) {
+      this.song.playing = isPlaying;
+    },
     setActiveMovie(activeMovie) {
       this.activeMovie = activeMovie;
     },
     setSeconds(activeMovie, seconds) {
       this.setActiveMovie(activeMovie);
       this.movieFrameSeconds = seconds;
+    },
+    setTag(tag = null) {
+      this.hoverTag = tag
     },
     setWidth() {
       this.displayWidth = window.innerWidth;

@@ -1,3 +1,5 @@
+@import url(https://use.typekit.net/oac6zmt.css);
+
 $hot-pink: #EA1589;
 // $hot-pink-50: fade($hot-pink, .5);
 
@@ -10,6 +12,18 @@ $gold-light: #F0D797;
 $cream: #FAEED1;
 $white: #fff;
 
+
+.color-0 {
+  background: $gold
+}
+
+.color-1 {
+  background: $teal;
+}
+
+.color-2 {
+  background: $hot-pink;
+}
 
 .franklin {
     font-family: "franklin-gothic-urw", sans-serif;
