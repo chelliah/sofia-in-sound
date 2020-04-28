@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -66,7 +67,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Sofia In Sound',
       favicon: './src/data/img/favicon-32x32.png'
-    }),
+    })
     // new CopyWebpackPlugin([{
     //   from: 'src/data/img'
     // }])

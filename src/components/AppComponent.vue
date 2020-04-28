@@ -81,19 +81,89 @@ export default {
       activeMovie: movieFrames.lost_in_translation.id,
       longestFilmLength: movieFrames.marie_antoinette.seconds,
       hoverTag: null,
+      auth: null,
       song: {
         playing: false,
-        data: null
-      }
+        data: null,
+        mp3: null,
+        spotifyData: null
+      },
+
+      audioContext: null,
+      audioBuffer: null,
+      audioSource: null
     };
   },
   methods: {
     setSong(song = null) {
-      this.setIsPlaying(song !== null);
+      if(song.uri) {
+        let uri = song.uri.split(":")[2]
+        fetch(`https://api.spotify.com/v1/tracks/${uri}`, {
+          headers: new Headers({
+            Authorization: 'Bearer ' + this.auth
+          })
+        })
+        .then(resp => {
+          if (resp.ok) {
+            return resp.json()
+          }
+        })
+        .then(resp => {
+          this.song.spotifyData = resp
+
+          if(this.song.spotifyData.preview_url) {
+            this.loadMp3(this.song.spotifyData.preview_url)
+          }
+        })
+      } else {
+        this.setIsPlaying(false);
+      }
       this.song.data = song;
+    },
+    loadMp3(url) {
+      this.deleteSong();
+      fetch(url)
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => this.audioContext.decodeAudioData(arrayBuffer))
+        .then(audioBuffer => {
+          this.audioBuffer = audioBuffer;
+          this.loadSong()
+          this.setIsPlaying(true)
+        });
+
+    
+    },
+    loadSong() {
+
+      this.audioSource = this.audioContext.createBufferSource();
+      this.audioSource.buffer = this.audioBuffer;
+      this.audioSource.connect(this.audioContext.destination);
+    },
+    playSong() {
+      this.audioSource.start();
+      this.song.playing = true;
+    },
+    pauseSong() {
+      this.audioSource.stop();
+      this.song.playing = false;
+    },
+    deleteSong() {
+      if(!this.audioSource) return;
+      this.audioSource.disconnect(this.audioContext.destination);
+      this.audioSource.stop();
+
+      this.song.playing = false;
     },
     setIsPlaying(isPlaying) {
       this.song.playing = isPlaying;
+
+      if(isPlaying) {
+        this.loadSong()
+
+        this.playSong()
+      } else {
+        this.pauseSong()
+      }
     },
     setActiveMovie(activeMovie) {
       this.activeMovie = activeMovie;
@@ -118,7 +188,21 @@ export default {
   },
   mounted() {
     this.setWidth();
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+    this.audioContext = new AudioContext();
     window.addEventListener("resize", this.setWidth.bind(this));
+
+    fetch('http://localhost:8009/auth', {
+      method: 'POST',
+      mode: 'cors'
+    }).then(response => {
+      if(response.ok) {
+        return response.json()
+      }
+    }).then(resp => {
+      this.auth = resp.auth;
+    })
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.setWidth.bind(this));
