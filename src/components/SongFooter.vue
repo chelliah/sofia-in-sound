@@ -82,10 +82,13 @@ export default {
 .song-metadata {
   display: flex;
   align-items: center;
+  justify-content: stretch;
+  width: 100%;
 
   .title-container {
-    width: 30%;
+    flex-basis: 30%;
     min-width: 200px;
+    max-width: 300px;
     margin-left: 20px;
 
     &.artist h3 {

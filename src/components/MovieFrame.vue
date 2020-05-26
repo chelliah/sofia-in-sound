@@ -107,7 +107,7 @@ export default {
   align-items: center;
 
   min-height: 192px;
-  margin: 0;
+  margin: 0 0 24px 0;
 }
 
 .movie-frame--placeholder {

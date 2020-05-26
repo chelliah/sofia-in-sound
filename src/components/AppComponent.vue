@@ -26,12 +26,34 @@
       />
     </svg>
 
-    <movie-frame
-      :full-image="movieFrames[activeMovie].full"
-      :placeholder-image="movieFrames[activeMovie].placeholder"
-      :height="movieFrames[activeMovie].height"
-      :seconds="movieFrameSeconds"
-    />
+    <section class="flex">
+      <movie-frame
+        :full-image="movieFrames[activeMovie].full"
+        :placeholder-image="movieFrames[activeMovie].placeholder"
+        :height="movieFrames[activeMovie].height"
+        :seconds="movieFrameSeconds"
+      />
+      <div class="desc-container">
+        <p class="desc">Bangers bangers bangers</p>
+        <div class="hint">
+          <svg
+            role="img"
+            width="32"
+            height="36"
+            viewBox="0 0 32 36"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20.1493 31.9216C20.7252 32.3249 21.5366 32.1819 21.9399 31.6059C22.3432 31.0299 22.2001 30.2186 21.6242 29.8153C21.0482 29.412 20.2368 29.555 19.8335 30.131C19.4302 30.707 19.5733 31.5184 20.1493 31.9216ZM6.10182 25.2247C9.29432 27.4601 13.5832 27.3241 16.4631 29.3406L16.9897 29.7093L24.3642 19.1773L23.8376 18.8086C22.0933 17.5872 21.9619 15.288 21.7499 13.3493C21.6052 12.1198 21.5099 10.925 21.5776 9.67257C21.6056 9.17719 21.6617 8.67688 21.7177 8.17657C21.8017 7.67133 22.2991 5.17475 21.8383 4.85212C20.4395 3.87268 18.8366 3.53508 17.7304 5.11487C16.2555 7.22126 17.0863 9.3971 16.3604 10.4338L6.88162 3.79674C5.77905 3.02471 4.08386 3.3092 3.30031 4.42822C2.50525 5.56369 2.79632 7.21445 3.93179 8.00952L9.37879 11.8235C8.75666 11.9765 7.98471 12.5886 7.61598 13.1152C7.07441 13.8887 6.92617 14.7659 7.11695 15.6842C6.6775 15.8915 6.30222 16.2173 6.02567 16.6123C5.49563 17.3693 5.21732 18.5723 5.64346 19.4348C5.38668 19.6964 5.13484 19.986 4.9159 20.2987C3.52165 22.2899 4.24228 23.9226 6.10182 25.2247ZM4.54463 27.2734C1.50024 25.1417 0.656416 21.8287 2.86713 18.7415C2.80147 17.4693 3.19335 16.1741 3.9308 15.1209C4.09212 14.8905 4.28142 14.6552 4.47565 14.4479C4.55641 13.597 4.80339 12.789 5.23798 12.0633L2.45688 10.1159C0.15302 8.50273 -0.407739 5.24071 1.20545 2.93685C2.79558 0.665896 6.08557 0.100207 8.35653 1.69035L14.5111 5.99985C14.7367 5.15231 15.117 4.36403 15.624 3.63996C17.5714 0.858864 20.6967 0.913611 23.3132 2.74573C25.5183 4.28977 24.2556 7.59926 24.1384 9.798C24.0905 10.9171 24.1776 11.9836 24.2976 13.0731C24.3946 13.9503 24.5226 16.1491 25.3125 16.7022L30.0519 20.0208C31.2203 20.8389 31.5015 22.4337 30.6834 23.6021L23.3088 34.134C22.4907 35.3024 20.8959 35.5836 19.7275 34.7655L14.9882 31.4469C13.9514 30.721 11.8959 30.1891 10.6386 29.8483C8.48928 29.2753 6.38772 28.564 4.54463 27.2734Z"
+              fill="#EA1589"
+              fill-opacity="0.5"
+            />
+          </svg>
+          <p>Thumb through the movies below to explore their soundtracks.</p>
+        </div>
+      </div>
+    </section>
 
     <scene-scrubber
       v-for="(movie, name) in movieFrames"
@@ -49,8 +71,13 @@
       :label="movie.label"
       :songsList="movieSongs[name]"
     />
-    
-    <song-footer :setIsPlaying="setIsPlaying" :isPlaying="song.playing" :song="song.data" :setTag="setTag"/>
+
+    <song-footer
+      :setIsPlaying="setIsPlaying"
+      :isPlaying="song.playing"
+      :song="song.data"
+      :setTag="setTag"
+    />
   </main>
 </template>
 <script>
@@ -96,25 +123,25 @@ export default {
   },
   methods: {
     setSong(song = null) {
-      if(song.uri) {
-        let uri = song.uri.split(":")[2]
+      if (song.uri) {
+        let uri = song.uri.split(":")[2];
         fetch(`https://api.spotify.com/v1/tracks/${uri}`, {
           headers: new Headers({
-            Authorization: 'Bearer ' + this.auth
+            Authorization: "Bearer " + this.auth
           })
         })
-        .then(resp => {
-          if (resp.ok) {
-            return resp.json()
-          }
-        })
-        .then(resp => {
-          this.song.spotifyData = resp
+          .then(resp => {
+            if (resp.ok) {
+              return resp.json();
+            }
+          })
+          .then(resp => {
+            this.song.spotifyData = resp;
 
-          if(this.song.spotifyData.preview_url) {
-            this.loadMp3(this.song.spotifyData.preview_url)
-          }
-        })
+            if (this.song.spotifyData.preview_url) {
+              this.loadMp3(this.song.spotifyData.preview_url);
+            }
+          });
       } else {
         this.setIsPlaying(false);
       }
@@ -127,14 +154,11 @@ export default {
         .then(arrayBuffer => this.audioContext.decodeAudioData(arrayBuffer))
         .then(audioBuffer => {
           this.audioBuffer = audioBuffer;
-          this.loadSong()
-          this.setIsPlaying(true)
+          this.loadSong();
+          this.setIsPlaying(true);
         });
-
-    
     },
     loadSong() {
-
       this.audioSource = this.audioContext.createBufferSource();
       this.audioSource.buffer = this.audioBuffer;
       this.audioSource.connect(this.audioContext.destination);
@@ -148,7 +172,7 @@ export default {
       this.song.playing = false;
     },
     deleteSong() {
-      if(!this.audioSource) return;
+      if (!this.audioSource) return;
       this.audioSource.disconnect(this.audioContext.destination);
       this.audioSource.stop();
 
@@ -157,12 +181,12 @@ export default {
     setIsPlaying(isPlaying) {
       this.song.playing = isPlaying;
 
-      if(isPlaying) {
-        this.loadSong()
+      if (isPlaying) {
+        this.loadSong();
 
-        this.playSong()
+        this.playSong();
       } else {
-        this.pauseSong()
+        this.pauseSong();
       }
     },
     setActiveMovie(activeMovie) {
@@ -173,7 +197,7 @@ export default {
       this.movieFrameSeconds = seconds;
     },
     setTag(tag = null) {
-      this.hoverTag = tag
+      this.hoverTag = tag;
     },
     setWidth() {
       this.displayWidth = window.innerWidth;
@@ -193,16 +217,18 @@ export default {
     this.audioContext = new AudioContext();
     window.addEventListener("resize", this.setWidth.bind(this));
 
-    fetch('http://localhost:8009/auth', {
-      method: 'POST',
-      mode: 'cors'
-    }).then(response => {
-      if(response.ok) {
-        return response.json()
-      }
-    }).then(resp => {
-      this.auth = resp.auth;
+    fetch("http://localhost:8009/auth", {
+      method: "POST",
+      mode: "cors"
     })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(resp => {
+        this.auth = resp.auth;
+      });
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.setWidth.bind(this));
@@ -210,6 +236,8 @@ export default {
 };
 </script>
 <style lang="scss">
+@import "../styles/global-styles.scss";
+
 body,
 html {
   margin: 0;
@@ -225,6 +253,45 @@ main {
 #movie-frame--container {
   height: 192px;
   width: 320px;
+}
+
+.flex {
+  display: flex;
+  // align-items: center;
+}
+
+.desc-container {
+  margin-left: 24px;
+  margin-top: 24px;
+  
+  .desc {
+    color: $teal;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+
+    text-shadow: 1px 1px 0px #ffffff;
+  }
+}
+
+.hint {
+  display: flex;
+
+  p {
+    /* Scroll through the movies below to hear their soundtrack. */
+
+    font-style: italic;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 24px;
+
+    color: $hot-pink;
+    margin: 0 0 0 8px;
+    text-shadow: 1px 1px 0px #ffffff;
+    width: 320px;
+  }
 }
 
 @media only screen and (min-width: 420px) {
